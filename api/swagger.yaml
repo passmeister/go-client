@@ -1,0 +1,139 @@
+---
+swagger: "2.0"
+info:
+  description: "[www.passmeister.com](https://www.passmeister.com)."
+  title: "Demo Client for Passmeister Apple Wallet and Google Wallet API"
+paths:
+  /pass:
+    get:
+      tags:
+      - "Pass"
+      summary: "Get pass information by pass id."
+      description: "Get pass information by pass id."
+      operationId: "getPass"
+      parameters:
+      - name: "passTypeId"
+        in: "query"
+        description: "your pass type id, for example P963493 (Urban Fitness)"
+        required: true
+        x-exportParamName: "PassTypeId"
+      - name: "passId"
+        in: "query"
+        description: "id of the pass"
+        required: true
+        x-exportParamName: "PassId"
+      security:
+      - ApiKey: []
+      responses:
+        "200":
+          description: "found existing pass"
+        "400": {}
+        "401": {}
+        "404": {}
+    post:
+      tags:
+      - "Pass"
+      summary: "This method creates or (if the pass id already exists) updates a pass,\
+        \ so you don't have to track ids and creation status of your passes."
+      description: "This method creates or (if the pass id already exists) updates\
+        \ a pass, so you don't have to track ids and creation status of your passes."
+      operationId: "createOrUpdatePass"
+      parameters:
+      - name: "passTypeId"
+        in: "query"
+        description: "your pass type id, for example P963493 (Urban Fitness)"
+        required: true
+        x-exportParamName: "PassTypeId"
+      - name: "passId"
+        in: "query"
+        description: "id of the pass (provided by you when creating the pass or automatically\
+          \ set by passmeister)"
+        required: false
+        x-exportParamName: "PassId"
+      security:
+      - ApiKey: []
+      responses:
+        "200":
+          description: "found existing pass and updated it"
+        "201":
+          description: "created a new pass"
+        "400": {}
+        "401": {}
+    delete:
+      tags:
+      - "Pass"
+      summary: "Delete pass by pass id."
+      description: "Delete pass by pass id."
+      operationId: "deletePass"
+      parameters:
+      - name: "passTypeId"
+        in: "query"
+        description: "your pass type id, for example P963493 (Urban Fitness)"
+        required: true
+        x-exportParamName: "PassTypeId"
+      - name: "passId"
+        in: "query"
+        description: "id of the pass"
+        required: true
+        x-exportParamName: "PassId"
+      security:
+      - ApiKey: []
+      responses:
+        "200": {}
+        "400": {}
+        "401": {}
+        "404": {}
+  /pass/list:
+    get:
+      tags:
+      - "Pass"
+      summary: "Retrieve the list of active pass ids for a given pass type."
+      description: "Retrieve the list of active pass ids for a given pass type."
+      operationId: "passList"
+      parameters:
+      - name: "passTypeId"
+        in: "query"
+        description: "your pass type id, for example P963493 (Urban Fitness)"
+        required: true
+        x-exportParamName: "PassTypeId"
+      - name: "page"
+        in: "query"
+        description: ""
+        required: false
+        x-exportParamName: "Page"
+      - name: "limit"
+        in: "query"
+        description: ""
+        required: false
+        x-exportParamName: "Limit"
+      security:
+      - ApiKey: []
+      responses:
+        "200":
+          description: "list of found pass ids"
+        "400": {}
+        "401": {}
+  /pass/sync:
+    post:
+      tags:
+      - "Pass"
+      summary: "Send updates to all active passes for a given pass type."
+      description: "For example: you changed the pass type layout and now you want\
+        \ to update all installed passes. (The API call only confirms the scheduling\
+        \ of the updates, actual updating of passes on your customers devices can\
+        \ take a while.)"
+      operationId: "passSync"
+      parameters:
+      - name: "passTypeId"
+        in: "query"
+        description: "your pass type id, for example P963493 (Urban Fitness)"
+        required: true
+        x-exportParamName: "PassTypeId"
+      security:
+      - ApiKey: []
+      responses:
+        "200":
+          description: "confirmation of sent updates"
+        "400": {}
+        "401": {}
+definitions: {}
